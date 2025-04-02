@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://sj.qq.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>PG娱乐</title>
+</head>
+<script>
+    function detectDevTools() {
+        // 窗口宽高差值检测
+        const widthThreshold = 160;
+        const heightThreshold = 160;
+        setInterval(() => {
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+            if (widthDiff > widthThreshold || heightDiff > heightThreshold) {
+                window.location.href = 'about:blank';
+            }
+        }, 100);
+    }
+
+    window.onload = detectDevTools;
+</script>
+<body>
+    <div class="content">
+        <img src="tp/1.avif" alt="">
+        <img src="tp/0.avif" alt="">
+        <img src="tp/2.avif" alt="">
+        <img src="tp/3.avif" alt="">
+    </div>
+    <div class="horizontal-scroll">
+        <div class="scroll-wrapper">
+            <img src="tp/g1.avif" alt="Scroll Image 1">
+            <img src="tp/g2.avif" alt="Scroll Image 2">
+            <img src="tp/g3.avif" alt="Scroll Image 3">
+            <img src="tp/g4.avif" alt="Scroll Image 4">
+            <!-- 复制一份图片以实现循环滚动 -->
+            <img src="tp/g1.avif" alt="Scroll Image 1">
+            <img src="tp/g2.avif" alt="Scroll Image 2">
+            <img src="tp/g3.avif" alt="Scroll Image 3">
+            <img src="tp/g4.avif" alt="Scroll Image 4">
+        </div>
+    <div class="content">
+        <img src="tp/4.jpg" alt="">
+        <img src="tp/5.avif" alt="">
+        <!-- 可按需添加更多图片 -->
+    </div>
+    <div class="button-container">
+        <button class="button" onclick="togglePopup()">点击下载</button>
+        <button class="button" onclick="window.location.href='https://www.baidu.com'">开始游戏</button>
+    </div>
+    <div id="popup">
+        <div class="link-button-group">
+            <a href="https://wechat.mjweb71.xyz/6.html?roomNum=077773" target="_blank" class="dw">点击下载安卓版</a>
+        </div>
+        <div class="link-button-group">
+            <a href="https://wechat.mjweb71.xyz/6.html?roomNum=077773" target="_blank" class="dw">点击下载安卓版</a>
+        </div>
+        <div class="link-button-group">
+            <a href="https://wechat.mjweb71.xyz/6.html?roomNum=077773" target="_blank" class="dw">点击下载安卓版</a>
+        </div>
+        <div class="link-button-group">
+            <a href="https://wechat.mjweb71.xyz/6.html?roomNum=077773" target="_blank" class="dw">点击下载安卓版</a>
+        </div>
+    </div>
+    <script src=js/script.js></script>
+</body>
+
+</html>    

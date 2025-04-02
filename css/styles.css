@@ -1,0 +1,122 @@
+ body {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 60px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.content img {
+    width: 100%;
+    height: auto;
+    display: block; /* 去除图片底部默认的间隙 */
+}
+.horizontal-scroll {
+    overflow: hidden;
+    position: relative;
+    margin: 0px 0;
+}
+
+.scroll-wrapper {
+    display: flex;
+    animation: scroll 25s linear infinite; /* 20s 滚动一次，可根据需要调整 */
+}
+
+.scroll-wrapper img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    margin: 0; /* 去除图片的外边距，实现无间隙 */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-400%); /* 因为复制了一份图片，所以滚动到一半就回到起点 */
+    }
+}
+
+.button-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #250303;
+    border-top: 1px solid #2e0202;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.button {
+    padding: 10px 80px;
+    background-color: orange;
+    color: #201301;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: darkorange;
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(58, 4, 4, 0.8); /* 修改为半透明背景 */
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;  
+    min-width: 300px; /* 缩小窗口的最小宽度 */
+}
+.dw {
+    display: block;
+    color: #5bff63;
+    height: 57px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 56px;
+    font-size: 26px;
+    background: #ccb9b9;
+    width: 200px;
+}
+.link-button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 20px;
+}
+
+.link-button-group a {
+    color: #007BFF;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.link-button-group button {
+    padding: 5px 40px;
+    background-color: #007BFF;
+    color: rgb(37, 2, 2);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.link-button-group button:hover {
+    background-color: #0056b3;
+}    
