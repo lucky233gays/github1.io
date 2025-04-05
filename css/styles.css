@@ -54,7 +54,7 @@
 }
 
 .button {
-    padding: 10px 30px;
+    padding: 5px 20px;
     background-color: orange;
     color: #201301;
     border: none;
@@ -62,7 +62,7 @@
     cursor: pointer;
 }
 .button1 {
-    padding: 10px 30px;
+    padding: 5px 20px;
     background-color: rgb(27, 125, 253);
     color: #000000;
     border: none;
