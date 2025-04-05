@@ -27,6 +27,37 @@
 <body>
     <div class="content">
         <img src="tp/1.jpg" alt="">
+    </div>
+        <style>
+            .scroll-container {
+                width: 100%;
+                overflow: hidden;
+                background-color: #221501;
+            }
+    
+            .scroll-text {
+                white-space: nowrap;
+                animation: scroll 10s linear infinite;
+                font-size: 24px;
+                color: #ffffff;
+            }
+    
+            @keyframes scroll {
+                0% {
+                    transform: translateX(100%);
+                }
+                100% {
+                    transform: translateX(-100%);
+                }
+            }
+        </style>
+    </head>
+    
+    <body class="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <div class="scroll-container w-full p-4">
+            <div class="scroll-text">欢迎莅临永利集团，BV试玩房间号222027，正式娱乐房间000965！欢迎老板大驾光临，祝老板在此处多多盈利！</div>
+        </div>
+        <div>
         <img src="tp/0.jpg" alt="">
         <img src="tp/a1.png" alt="">
         <img src="tp/g5.png" alt="">
