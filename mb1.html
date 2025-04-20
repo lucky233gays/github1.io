@@ -90,62 +90,25 @@
         <div class="slider" id="slider">
             <!-- 图片 1 -->
             <img src="./static/img/mb1.jpg" alt="">
-            <!-- 图片 2 -->
-            <img src="./static/img/mb2.jpg" alt="模板">
-            <!-- 图片 3 -->
-            <img src="./static/img/mb3.jpg" alt="模板">
-            <!-- 图片 4 -->
-            <img src="./static/img/mb4.jpg" alt="模板">
-            <!-- 图片 5 -->
-            <img src="./static/img/mb5.jpg" alt="模板">
         </div>
-        <!-- 左箭头按钮，点击调用 prevSlide 函数 -->
-        <div class="arrow left-arrow" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
-        <!-- 右箭头按钮，点击调用 nextSlide 函数 -->
-        <div class="arrow right-arrow" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></div>
-    </div>
-    <script>
-        // 获取滑块元素
-        const slider = document.getElementById('slider');
-        // 当前显示图片的索引，初始为 0
-        let currentIndex = 0;
+        <div class="slider" id="slider">
+            <!-- 图片 1 -->
+            <img src="./static/img/mb2.jpg" alt="">
+        </div>
+        <div class="slider" id="slider">
+            <!-- 图片 1 -->
+            <img src="./static/img/mb3.jpg" alt="">
+        </div>
+        <div class="slider" id="slider">
+            <!-- 图片 1 -->
+            <img src="./static/img/mb4.jpg" alt="">
+        </div>
+        <div class="slider" id="slider">
+            <!-- 图片 1 -->
+            <img src="./static/img/mb5.jpg" alt="">
+        </div>
 
-        // 切换到下一张图片的函数
-        function nextSlide() {
-            // 如果当前索引小于图片总数减 1
-            if (currentIndex < slider.children.length - 1) {
-                // 索引加 1
-                currentIndex++;
-            } else {
-                // 若当前索引为最后一张图片，将索引重置为 0
-                currentIndex = 0;
-            }
-            // 更新滑块位置
-            updateSlider();
-        }
-
-        // 切换到上一张图片的函数
-        function prevSlide() {
-            // 如果当前索引大于 0
-            if (currentIndex > 0) {
-                // 索引减 1
-                currentIndex--;
-            } else {
-                // 若当前索引为第一张图片，将索引设置为最后一张图片的索引
-                currentIndex = slider.children.length - 1;
-            }
-            // 更新滑块位置
-            updateSlider();
-        }
-
-        // 更新滑块位置的函数
-        function updateSlider() {
-            // 获取滑块的宽度
-            const slideWidth = slider.offsetWidth;
-            // 根据当前索引计算滑块的偏移量并设置样式
-            slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-        }
-    </script>
+    
 </body>
 
 </html>    
