@@ -505,14 +505,14 @@ body {
 }
 
 .projectItemLeft p {
-    font-size: 12px;
-    margin-top: 15px;
+    font-size: 9px;
+    margin-top: 12px;
     color: var(--item_left_text_color);
 }
 
 .projectItemLeft h1 {
     font-weight: normal;
-    font-size: 16px;
+    font-size: 11px;
     margin: 0px;
     transition: font-size 0.4s ease;
     color: var(--item_left_title_color);
@@ -520,8 +520,8 @@ body {
 
 .projectItemLeft {
     transition: width 0.4s ease;
-    height: 100%;
-    width: 80%;
+    height: 120%;
+    width: 120%;
 }
 
 .projectItemRight {
