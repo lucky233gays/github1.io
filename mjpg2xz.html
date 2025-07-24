@@ -1,12 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=itms-services://?action=download-manifest&url=https://av1-dne0d9aqfccsgrhb.a01.azurefd.net/download/ipa/mj_1.8.4.1_9a.plist">
-    <title>正在跳转</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载应用</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .btn-hover {
+                @apply transform                    transition-all
+                    duration-300
+                    hover:shadow-lg
+                    hover:-translate-y-1
+                    active:translate-y-0;
+            }
+        }
+    </style>
 </head>
-<body>
-    未自动下载安装，请点击 <a href="itms-services://?action=download-manifest&url=https://av1-dne0d9aqfccsgrhb.a01.azurefd.net/download/ipa/mj_1.8.4.1_9a.plist">这里</a>。
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <a 
+        href="itms-services://?action=download-manifest&url=https://av1-dne0d9aqfccsgrhb.a01.azurefd.net/download/ipa/mj_1.8.4.1_9a.plist" 
+        class="bg-primary text-white px-8 py-4 rounded-lg text-lg font-medium flex items-center gap-2 btn-hover"
+    >
+        <i class="fa fa-download"></i>
+        <span>下载应用</span>
+    </a>
 </body>
 </html>
-    
