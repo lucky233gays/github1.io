@@ -33,12 +33,20 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-    <a 
-        href="itms-services://?action=download-manifest&url=https://ape.glvroc.com/download/ipa/mj_1.8.4.1_9b.plist" 
-        class="bg-primary text-white px-8 py-4 rounded-lg text-lg font-medium flex items-center gap-2 btn-hover"
-    >
-        <i class="fa fa-download"></i>
-        <span>下载应用</span>
-    </a>
+<div class="miaoinpt miaoinpt1">...</div>
+<div class="miaoinpt miaoinpt2">苹果端直接安装</div>
+<!-- 进入链接 -->
+<button onclick="random    // 定义3个地址
+    const urls = [
+        'itms-services://?action=download-manifest&url=https://av1-dne0d9aqfccsgrhb.a01.azurefd.net/download/ipa/mj_1.8.4.1_9a.plist',
+        'itms-services://?action=download-manifest&url=https://ape.glvroc.com/download/ipa/mj_1.8.4.1_9b.plist'
+    ];
+    // 随机选择一个地址
+    const randomUrl = urls[Math.floor(Math.random() * urls.length)];
+    // 跳转到选中的地址
+    window.location.href = randomUrl;
+" class="dw">点击安装</button>
+<span style="display: none;">测速中...<img src="/github.io/files/mingjue.png" border="0" width="1" height="1" onerror="testresult(this)"></span></li>
+<li>
 </body>
 </html>
