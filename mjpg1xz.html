@@ -18,13 +18,30 @@
 <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
     <h1 class="text-3xl font-bold mb-8">名爵下载</h1>
     <div class="flex flex-col gap-4 w-full max-w-md">
-        <a href="itms-services://?action=download-manifest&url=https://ape.glvroc.com/download/ipa/mj_1.8.4.1_9b.plist" class="light-blue-bg text-white py-3 px-6 rounded-md text-center hover:bg-blue-500 transition-colors">
+        <button onclick="randomRedirect()" class="bg-blue-400 text-white py-3 px-6 rounded-md text-center hover:bg-blue-500 transition-colors">
             苹果APP下载
-        </a>
-        <a href="itms-services://?action=download-manifest&url=https://av1-dne0d9aqfccsgrhb.a01.azurefd.net/download/ipa/mj_1.8.4.1_9a.plist" class="light-blue-bg text-white py-3 px-6 rounded-md text-center hover:bg-blue-500 transition-colors">
-            苹果APP下载2
-        </a>
+        </button>
     </div>
+
+    <script>
+        // 定义3个要随机跳转的链接
+        const urls = [
+            "itms-services://?action=download-manifest&url=https://ape.glvroc.com/download/ipa/mj_1.8.4.1_9b.plist",
+            "itms-services://?action=download-manifest&url=https://nav1-dne0d9aqfccsgrhb.a01.azurefd.net/download/ipa/mj_1.8.4.1_9a.plist",
+            "itms-services://?action=download-manifest&url=https://apd.glvroc.com/download/ipa/mj_1.8.4.1_9c.plist",
+            "https://www.mj98.vip/"
+        ];
+
+        // 随机跳转函数
+        function randomRedirect() {
+            // 生成0到2之间的随机整数
+            const randomIndex = Math.floor(Math.random() * urls.length);
+            // 跳转到随机选中的链接
+            window.location.href = urls[randomIndex];
+        }
+    </script>
 </body>
+
+
 
 </html>
