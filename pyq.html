@@ -1,595 +1,487 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>富贵科技朋友圈</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="./static/img/favicon.ico">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#1677ff',
-            secondary: '#f5f5f5',
-            dark: '#141414',
-          },
-          fontFamily: {
-            inter: ['Inter', 'sans-serif'],
-          },
-          textSize: {
-            'xs': '0.75rem', // 12px
-            'sm': '0.875rem', // 14px
-            'base': '1.04rem', // 16px → 1.3倍放大后≈21px
-            'lg': '1.25rem', // 20px
-            'xl': '1.5rem', // 24px
-            '2xl': '1.875rem', // 30px
-            '3xl': '2.25rem', // 36px
-            '4xl': '3rem', // 48px
-            '5xl': '3.75rem', // 60px
-          }
-        },
-      }
-    }
-  </script>
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-      .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-      }
-      .text-shadow {
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      }
-      .card-hover {
-        transition: all 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      }
-      .img-zoom {
-        transition: transform 0.3s ease;
-      }
-      .img-zoom:hover {
-        transform: scale(1.03);
-      }
-      .img-modal {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-      }
-      .img-modal.active {
-        opacity: 1;
-        visibility: visible;
-      }
-      .modal-content {
-        transform: scale(0.9);
-        transition: transform 0.3s ease;
-      }
-      .img-modal.active .modal-content {
-        transform: scale(1);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        telegram: {
+                            blue: '#2AABEE',
+                            dark: '#1E293B',
+                            light: '#F8FAFC',
+                            gray: '#94A3B8',
+                            'gray-dark': '#334155',
+                            'gray-light': '#E2E8F0',
+                            'message-in': '#E5E7EB',
+                            'message-out': '#2AABEE'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .message-in {
+                border-radius: 18px 18px 18px 4px;
+            }
+            .message-out {
+                border-radius: 18px 18px 4px 18px;
+            }
+            .image-grid {
+                display: grid;
+                gap: 2px;
+            }
+            .image-item {
+                position: relative;
+                overflow: hidden;
+                cursor: pointer;
+            }
+            .image-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.2s;
+            }
+            .image-item img:hover {
+                transform: scale(1.02);
+            }
+            .image-caption-container {
+                padding: 12px 16px;
+                word-wrap: break-word;
+            }
+            .image-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s, visibility 0.3s;
+            }
+            .image-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            .overlay-content {
+                max-width: 90%;
+                max-height: 90%;
+                position: relative;
+            }
+            .overlay-content img {
+                max-width: 100%;
+                max-height: 85vh;
+                object-fit: contain;
+            }
+            .close-btn {
+                position: absolute;
+                top: -40px;
+                right: 0;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            /* 电话图标放大40% */
+            .phone-icon {
+                transform: scale(1.4);
+            }
+            /* Telegram 风格背景 */
+            .chat-container {
+                background-image: url('./img/bj.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+            .message-container {
+                backdrop-filter: blur(0px);
+                -webkit-backdrop-filter: blur(0px);
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-inter text-gray-800 min-h-screen">
-  <!-- 顶部导航 -->
-  <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 transition-all duration-300" id="navbar">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <button class="text-gray-600 hover:text-primary transition-colors">
-          <i class="fa fa-arrow-left text-xl"></i>
-        </button>
-        <h1 class="text-xl font-bold text-gray-800">富贵科技团队</h1>
-      </div>
+<body class="font-inter bg-gray-100 text-telegram-dark h-screen flex overflow-hidden">
+    <!-- 主容器 -->
+    <div class="flex flex-col w-full h-full max-w-5xl mx-auto bg-white shadow-lg">
+        <!-- 主聊天区域（带 Telegram 背景） -->
+        <div class="flex-1 flex flex-col h-full chat-container">
+            <!-- 聊天头部（半透明效果） -->
+            <div class="bg-white/80 backdrop-blur-sm p-3 border-b border-gray-200/70 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="relative">
+                        <img src="./img/tx1.jpeg" alt="李华的头像" class="w-10 h-10 rounded-full object-cover">
+                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white"></span>
+                    </div>
+                    <div class="ml-3">
+                        <h2 class="font-medium text-sm">富贵丶科技|导航页|BV|名爵|大疆</h2>
+                        <p class="text-xs text-gray-500">在线</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6"> <!-- 增加间距以适应放大的图标 -->
+                    <!-- 电话图标 - 放大40%并添加跳转百度功能 -->
+                    <a href="https://tawk.to/chat/67f0dc85629404190ac76403/1io2dqqdg" target="_blank" class="text-gray-500 hover:text-gray-700 transition">
+                        <i class="fa fa-phone phone-icon"></i>
+                    </a>
+                    <button class="text-gray-500 hover:text-gray-700 transition">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 聊天消息区域（半透明效果） -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide message-container" id="chat-messages">
+                <!-- 日期分割线 -->
+                <div class="flex justify-center">
+                    <span class="text-xs bg-white/70 backdrop-blur-sm text-gray-500 px-3 py-1 rounded-full">今天</span>
+                </div>
+                
+                <!-- 对方消息 - 1张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">电脑连接数据线批量控制手机公布！<br>
+免费版可同时控制10台手机<br>
+自行付费可无限控制<br>
+需要用品：<br>
+USB扩展坞（给手机充电与连接）<br>
+电脑<br>
+（只能批量控制安卓手机）<br>
+https://www.laixi.app/?lang=zh-CN<br>
+电脑控制安卓手机使用软件（来喜）<br>
+将手机打开开发者选项后<br>
+打开USB调试<br>
+下拉选择USB配置为MTP多媒体传输后重新拔插手机即可连接<br></p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:32</span>
+                    </div>
+                </div>
+                
+                <!-- 对方消息 - 2张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">资料用途并不是只有加微信的作用哟。可以将手机号码导入通讯录文件用于抖音，快手，小红书等社交APP进行添加通讯录好友来拉客户！
+http://cheshi.mj222.club<br>
+以上是富贵科技制作的网页版手机号码一键转换通讯录文件的网页<br>
+上限是300个<br>
+
+如需提高导入上限可联系，可修改代码提高上限<br>
+
+丝瓜：每日通讯录可添加3个好友<br>
+缅呗：客户少（有人在上面宣传房间）<br>
+抖音快手小红书看账号质量，建议慢慢关注，操之过急容易出问题！</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:35</span>
+                    </div>
+                </div>
+                
+                <!-- 对方消息 - 3张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">测试网：http://ipdj1.bv333.cc/login.html<br>
+
+后台查询数据：http://ipdj1.bv333.cc/login_123123.php</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:37</span>
+                    </div>
+                </div>
+                
+                <!-- 对方消息 - 4张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">有许多的客户会担心说房间导航页会盗取客户信息！<br>
+这点请无需担心呢！因为我这做的导航页是（没有服务器）的！<br>
+所以才会说一个一年800折合下来就2.2元一天！<br>
+有个别客户觉得加载速度慢（没有服务器当然慢了，但是5G时代也不会很卡的呢）<br>
+部分房主要求提高加载速度也是只会搭载在我自己平时研究测试的服务器上不会获取房主们的一切信息！<br>
+（挂我服务器上是不收费的，就是我服务器要是被攻击你们导航页也会瘫痪！）。<br>
+😘大家大可放心哟！😘<br>
+
+☹️祝各位房主生意兴隆！☹️</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:40</span>
+                    </div>
+                </div>
+                
+                <!-- 对方消息 - 6张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">☁️云端服务器香港机房<br>
+<br>
+🍰最低-配置：处理器2核 内存4096M 硬盘30GB 宽带20M <br>
+<br>
+🍰普通-配置：处理器4核 内存4096M 硬盘30GB 宽带30M <br>
+<br>
+🍰经济-配置：处理器4核 内存8192M 硬盘30GB 宽带30M<br>
+<br>
+🍰全能-配置：处理器8核 内存16384M 硬盘30GB 宽带50M<br>
+<br>
+<br>
+价格为200-300-400-600每月</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:45</span>
+                    </div>
+                </div>
+                
+                <!-- 对方消息 - 9张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">建议：<br>
+
+因为香港号码的whatsapp容易被盗导致资金损失，可以使用国内手机号码注册<br>
+使用国内移动卡发送短信11111到10085即可收国际短信，<br>
+貌似要等待且需要配合苹果手机才能成功收到国际注册短信哟（飞机也可以注册）<br>
+
+电信：编辑短信“KTGJDX”发送到10001，开通中国电信的国际及港澳台短信接收功能<br></p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:50</span>
+                    </div>
+                </div>
+                                <!-- 对方消息 - 4张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">⚡️⚡️业务：<br>
+代盗取房间内用户列表所有账号成功率10%<br>
+（价格2-300元，需提供无任何权限的子账号）<br>
+（时间是如8000用户1-2小时脚本提取出房间内的用户列表）<br>
+（筛出在您房间内有在其他房间娱乐的真实客户并将密码给您）<br>
+（名爵200，BV300，不限客户量）<br>
+（盗取时间为4小时=5000条）<br>
+（推荐给经常跑群刷屏的房主）<br>
+
+（5000条大约会成功盗取到100-300个bv号）<br></p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:40</span>
+                    </div>
+                </div>
+                                <!-- 对方消息 - 4张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">⚡️⚡️关于房主的导航页下载链接更新内容<br>
+                                    （为了方便这边后续一键更新所有网页的下载地址，目前统一管理的导航页共有70多个。<br>
+                                    软件最新更新，我完全更新好可能得花1小时，决定更新出一键更换下载链接）<br>
+名爵苹果下载<br>
+https://bv02.cc/mjpg1xz.html<br>
+名爵安卓下载<br>
+https://bv666.cc/mj1xz.html<br>
+bv新盛苹果下载<br>
+https://bv02.cc/bvpg1xz.html<br>
+bv新盛安卓下载<br>
+https://bv666.cc/bv1xz.html<br>
+
+
+已全数更新完毕</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:40</span>
+                    </div>
+                </div>
+                                <!-- 对方消息 - 4张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">潜入别人房间刷屏公布！<br>
+☹️☹️☹️☹️☹️☹️<br>
+（在其他频道看到公布了的刷屏用法）<br>
+特此决定免费公开！<br>
+BV刷屏主要使用逍遥模拟器<br>
+名爵刷屏主要使用雷电9模拟器<br>
+模拟器打开一个就等于是一个安卓手机<br>
+刷屏主要用到的就是模拟器中的操作录制并回放动作的功能<br>
+运行及多开纯看电脑配置！<br>
+一般运行4个不会导致电脑卡顿！<br>
+只要在里面录制好点击脚本就可以实现自动刷群<br>
+可以自行琢磨一下。<br>
+☹️☹️☹️☹️☹️☹️<br>
+而BV和名爵账号的话可以和房间内用户收购使用！<br>
+同时也公开了电脑连接安卓手机的方法！<br>
+公布了几个小技巧<br>
+可以查看置顶信息！</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:40</span>
+                    </div>
+                </div>
+                                                <!-- 对方消息 - 4张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">爬虫现爬提取资料（BV名爵大疆）<br>
+（实时爬取）<br>
+现爬2000起0.5一条！<br>
+现爬万起0.4一条！<br>
+2000条可能需要等待4-5小时，限制每日8点-22点爬取，夜间不爬，使数据更精准<br>
+需要的可以联系！<br>
+@luck_233</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:40</span>
+                    </div>
+                </div>
+                                                <!-- 对方消息 - 4张图片 -->
+                <div class="flex items-end space-x-2 max-w-[80%]">
+                    <img src="./img/tx1.jpeg" alt="李华" class="w-8 h-8 rounded-full object-cover">
+                    <div class="w-full max-w-md">
+                        <div class="bg-telegram-message-in/90 backdrop-blur-sm p-1 message-in">
+
+                            <div class="image-caption-container">
+                                <p class="text-sm">各位房主：<br>
+                                    近期bv名爵常盈利的用户可以怀疑是数据单，数据单特点：<br>
+（小钱赢大钱）<br>
+（上分后很久才下注的）<br>
+（下款时可以谎称转不过去，要是能在短时间内发出不同实名的收款码）<br>
+（一天就下几期4-6码）<br>
+（一次上分1000-2000，下分则是几倍的盈利金额一旦下注就是赢多输少）<br>
+（常出现在无飞单房间）<br>
+（近期疑似是购买了玩家资料后加玩家手机号码叫玩家拉入房间娱乐）<br>
+
+遇到这种直接黑就好了。<br>
+无需顾及（诚信经营）毕竟这种数据单一天能被黑很多次的！<br>
+已有多个房主遇见特此通知！😊<br></p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500 ml-2">09:40</span>
+                    </div>
+                </div>
+                
+                <!-- 自己消息 -->
+                <div class="flex items-end justify-end space-x-2 max-w-[80%] ml-auto">
+                    <div class="text-right">
+                        <div class="bg-telegram-message-out text-white p-3 message-out">
+                            <p class="text-sm">联系客服请点击右上角
+
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-end">
+                            <span class="text-xs text-gray-500 mr-2">10:02</span>
+                            <i class="fa fa-check-circle text-xs text-telegram-blue"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
-
-  <!-- 主要内容 -->
-  <main class="container mx-auto px-4 pt-24 pb-16">
-    <!-- 封面区域 -->
-    <div class="relative h-48 md:h-64 bg-gradient-to-r from-blue-400 to-purple-500 rounded-xl overflow-hidden mb-6">
-      <img src="https://picsum.photos/1000/400" alt="朋友圈封面" class="w-full h-full object-cover">
-      <div class="absolute bottom-4 left-4 flex items-end">
-        <div class="w-16 h-16 rounded-full border-2px border-white overflow-hidden">
-          <img src="https://picsum.photos/100/100?random=1" alt="用户头像" class="w-full h-full object-cover">
-        </div>
-        <div class="ml-3 text-white text-shadow">
-          <h2 class="font-bold text-lg">富贵科技团队</h2>
-          <p class="text-sm opacity-90">分享技术与日常
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 朋友圈内容流 -->
-    <div class="space-y-6">
-      <!-- 朋友圈动态1 -->
-                  <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://jj6666.cc/">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">导航页疯狂出单！</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="/static/img/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">jj6666.cc</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">富贵科技</p>
-                  <p class="text-gray-400 text-xs mt-1">成功出单</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-            <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://mj6666.cc">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">导航页火速出单中！</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="/static/img/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">mj6666.cc</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">龙腾娱乐</p>
-                  <p class="text-gray-400 text-xs mt-1">成功出单</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-            <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李冲</h3>
-
-              <!-- 单张图片 -->
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>1小时前</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>           
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">低成本注册接码平台软件已挂在bv666.cc
-             
-              可用于注册支付宝等用途。详细教程请咨询，需自行充值余额，可免费教
-              </p>
-              
-              <!-- 单张图片 -->
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>1小时前</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>           
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://cheshi.mj222.club">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">自制号码转通讯录工具</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="/static/img/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">cheshi.mj222.club</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">点击可使用</p>
-                  <p class="text-gray-400 text-xs mt-1">工具</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李冲</h3>
-              <p class="text-gray-700 mt-1">有什么网页上的需求可直接提出</p>
-              
-              <!-- 单张图片 -->
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>1小时前</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-      
-      <!-- 朋友圈动态2 - 多张图片 -->
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">😍导航页价格提高到500-700一年</p>
-              
-              <!-- 九宫格图片 -->
-
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>6月1号 18:30</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1 text-primary"></i>
-                    <span class="text-primary">已赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-      
-      <!-- 朋友圈动态3 - 纯文字 -->
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李冲</h3>
-
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>3天前</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-      
-      <!-- 朋友圈动态4 - 分享链接 (点击跳转到百度) -->
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://www.bv168.cc">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">李太白</h3>
-              <p class="text-gray-700 mt-1">导航页</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="https://bv168.cc/files/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">www.bv168.cc</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">点击可查看</p>
-                  <p class="text-gray-400 text-xs mt-1">成功出单</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-  </main>
-      <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://www.bv555.cc">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">导航页</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="https://bv555.cc/files/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">www.bv555.cc</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">点击可查看</p>
-                  <p class="text-gray-400 text-xs mt-1">成功出单</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-            <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://www.mj777.cc">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">李太白</h3>
-              <p class="text-gray-700 mt-1">又成功做了个导航页！美滋滋</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="/static/img/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">www.mj777.cc</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">点击可查看</p>
-                  <p class="text-gray-400 text-xs mt-1">成功出单</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-            <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover cursor-pointer" data-link="https://www.xj777.cc">
-        <div class="p-4">
-          <div class="flex items-start">
-            <div class="w-12 h-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src="/static/img/logo.png" alt="用户头像" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-1">
-              <h3 class="font-bold text-gray-900">富贵科技李太白</h3>
-              <p class="text-gray-700 mt-1">迄今为止最费脑的导航页！</p>
-              
-              <!-- 分享链接卡片 -->
-              <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex">
-                <div class="w-20 h-20 bg-gray-200 flex-shrink-0">
-                  <img src="/static/img/logo.png" alt="文章封面" class="w-full h-full object-cover">
-                </div>
-                <div class="p-3 flex-1">
-                  <h4 class="font-medium text-gray-900 text-sm line-clamp-1">www.xj777.cc</h4>
-                  <p class="text-gray-500 text-xs mt-1 line-clamp-2">点击可查看</p>
-                  <p class="text-gray-400 text-xs mt-1">成功出单</p>
-                </div>
-              </div>
-              
-              <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
-                <span>近期</span>
-                <div class="flex space-x-4">
-                  <button class="flex items-center hover:text-primary transition-colors">
-                    <i class="fa fa-thumbs-up mr-1"></i>
-                    <span>点赞</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-  </main>
-  <!-- 图片查看模态框 -->
-  <div class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center img-modal" id="imgModal">
-    <div class="modal-content relative max-w-4xl w-full px-4">
-      <button class="absolute -top-12 right-4 text-white text-2xl hover:text-gray-300 transition-colors" id="closeImgModal">
-        <i class="fa fa-times"></i>
-      </button>
-      <img src="" alt="大图查看" class="w-full h-auto max-h-[80vh] object-contain" id="modalImg">
-    </div>
-  </div>
-
-  <script>
-    // 导航栏滚动效果
-    window.addEventListener('scroll', function() {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 10) {
-        navbar.classList.add('py-2', 'shadow-lg');
-        navbar.classList.remove('py-3', 'shadow-md');
-      } else {
-        navbar.classList.add('py-3', 'shadow-md');
-        navbar.classList.remove('py-2', 'shadow-lg');
-      }
-    });
     
-    // 点赞功能
-    const likeButtons = document.querySelectorAll('button:has(.fa-thumbs-up)');
-    likeButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const icon = this.querySelector('.fa-thumbs-up');
-        const text = this.querySelector('span');
+    <!-- 图片放大查看器 -->
+    <div class="image-overlay" id="imageOverlay">
+        <div class="overlay-content">
+            <span class="close-btn" onclick="hideImage()">&times;</span>
+            <img id="overlayImage" src="" alt="放大查看的图片">
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后自动滚动到最新消息
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+            
+            // 点击遮罩层关闭图片查看
+            const overlay = document.getElementById('imageOverlay');
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    hideImage();
+                }
+            });
+            
+            // 按ESC键关闭图片查看
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                    hideImage();
+                }
+            });
+        });
         
-        if (icon.classList.contains('text-primary')) {
-          icon.classList.remove('text-primary');
-          text.classList.remove('text-primary');
-          text.textContent = '点赞';
-        } else {
-          icon.classList.add('text-primary');
-          text.classList.add('text-primary');
-          text.textContent = '已赞';
+        // 显示放大的图片
+        function showImage(src) {
+            const overlay = document.getElementById('imageOverlay');
+            const overlayImage = document.getElementById('overlayImage');
+            
+            overlayImage.src = src;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-      });
-    });
-    
-    // 链接跳转功能 - 将所有带data-link属性的文章设置点击跳转
-    document.querySelectorAll('article[data-link]').forEach(article => {
-      article.addEventListener('click', function(e) {
-        // 如果点击的是点赞按钮，不触发跳转
-        if (e.target.closest('button')) return;
         
-        const link = this.getAttribute('data-link');
-        if (link) {
-          window.location.href = link;
+        // 隐藏放大的图片
+        function hideImage() {
+            const overlay = document.getElementById('imageOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
-      });
-    });
-    
-    // 图片放大功能
-    const imgModal = document.getElementById('imgModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeImgModal = document.getElementById('closeImgModal');
-    
-    // 点击图片打开模态框
-    document.querySelectorAll('.img-zoom').forEach(imgContainer => {
-      imgContainer.addEventListener('click', function() {
-        const imgSrc = this.getAttribute('data-img');
-        if (imgSrc) {
-          modalImg.src = imgSrc;
-          imgModal.classList.add('active');
-          document.body.style.overflow = 'hidden'; // 防止背景滚动
-        }
-      });
-    });
-    
-    // 点击关闭按钮或图片本身关闭模态框
-    closeImgModal.addEventListener('click', closeModal);
-    modalImg.addEventListener('click', closeModal);
-    
-    // 点击模态框背景关闭模态框
-    imgModal.addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeModal();
-      }
-    });
-    
-    // 关闭模态框函数
-    function closeModal() {
-      imgModal.classList.remove('active');
-      document.body.style.overflow = ''; // 恢复背景滚动
-    }
-    
-    // ESC键关闭模态框
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && imgModal.classList.contains('active')) {
-        closeModal();
-      }
-    });
-  </script>
+    </script>
 </body>
 </html>
+    
