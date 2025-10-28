@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>正在下载</title>
+    <script>
+        // 定义要随机跳转的3个网页地址
+        const urls = [
+            "https://web.wpk100.com/#/mobile/ios",  // 第一个跳转地址
+            // 第二个跳转地址
+        ];
+        
+        // 生成随机索引（0、1、2中的一个）
+        const randomIndex = Math.floor(Math.random() * urls.length);
+        
+        // 获取随机选中的地址
+        const targetUrl = urls[randomIndex];
+        
+        // 设置延迟1秒后跳转（可根据需要调整延迟时间，单位毫秒）
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 1000);
+    </script>
+</head>
+<body>
+    未自动下载，请点击以下链接：<br>
+    <a href="https://comisrzmi.cnzyzl.cn/Dos/d/c/qjedSwu8LweKGNLK">链接</a><br>
+
+</body>
+</html>
