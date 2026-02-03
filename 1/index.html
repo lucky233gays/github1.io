@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TG获取用户昵称</title>
+    <style>
+        body { padding: 20px; font-size: 16px; font-family: sans-serif; margin: 0; }
+        .tip { color: #666; margin: 10px 0; }
+        .nickname { color: #2196F3; font-weight: bold; font-size: 18px; margin-top: 20px; }
+        .error { color: #f44336; margin: 10px 0; font-weight: 500; }
+        .success { color: #4caf50; margin: 10px 0; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <h3>Telegram用户信息获取</h3>
+    <p class="tip">提示：请在Telegram内置浏览器中打开（作为Web App运行）</p>
+    <div id="result"></div>
+
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultDom = document.getElementById('result');
+            let tgUserNickname = '';
+
+            // 核心优化1：先判断TG Web App是否存在，再强制初始化（所有版本必加）
+            if (window.Telegram && window.Telegram.WebApp) {
+                const tgWebApp = window.Telegram.WebApp;
+                // 关键方法：TG Web App初始化，通知TG已加载完成（缺失会导致部分API失效）
+                tgWebApp.ready();
+                // 可选：让网页占满TG内置浏览器窗口，提升体验
+                tgWebApp.expand();
+                // 禁止TG内置浏览器缩放，避免布局错乱
+                tgWebApp.isClosingConfirmationEnabled = true;
+
+                // 核心优化2：解构获取user，增加多层兜底（避免属性不存在报错）
+                const { user = null } = tgWebApp.initDataUnsafe || {};
+
+                if (user) {
+                    // 优化3：严谨的姓名/姓氏拼接，处理空值（部分用户last_name为null/undefined）
+                    const firstName = user.first_name || '未知昵称';
+                    const lastName = user.last_name || '';
+                    tgUserNickname = `${firstName} ${lastName}`.trim(); // 去除多余空格
+                    
+                    // 展示完整信息（姓名+姓氏+ID+用户名）
+                    resultDom.innerHTML = `
+                        <p class="success">✅ 授权成功，已获取用户信息</p>
+                        <p class="nickname">用户姓名：${tgUserNickname}</p>
+                        <p>名（first_name）：${firstName}</p>
+                        <p>姓（last_name）：${lastName || '未设置姓氏'}</p>
+                        <p>TG用户名：${user.username ? '@' + user.username : '未设置用户名'}</p>
+                        <p>TG用户ID：${user.id}</p>
+                    `;
+                    console.log('✅ TG用户信息获取成功：', user);
+                } else {
+                    // 明确提示：未授权/用户拒绝授权
+                    resultDom.innerHTML = `
+                        <p class="error">❌ 未获取到用户信息</p>
+                        <p>原因：你拒绝了机器人的信息获取授权，或授权已过期</p>
+                        <p>解决方案：退出机器人后重新进入，再次打开时点击「允许」</p>
+                    `;
+                    console.log('❌ initDataUnsafe.user为null，用户未授权');
+                }
+            } else {
+                // 明确提示：非TG内置浏览器/API未注入
+                resultDom.innerHTML = `
+                    <p class="error">❌ 非Telegram Web App运行环境</p>
+                    <p>原因1：网页跳转到了外部浏览器（Chrome/Edge/自带浏览器）</p>
+                    <p>原因2：网页链接非HTTPS协议（TG强制要求）</p>
+                    <p>原因3：未通过机器人Web App按钮打开（直接点击链接无效）</p>
+                `;
+                console.log('❌ 未检测到window.Telegram.WebApp对象');
+            }
+
+            // 全局可使用的昵称变量
+            window.tgUserNickname = tgUserNickname;
+            console.log('全局昵称变量：', window.tgUserNickname);
+        });
+    </script>
+</body>
+</html>
