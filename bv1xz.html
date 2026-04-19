@@ -62,8 +62,9 @@ body {
   font-size: 32px;
   color: #fff;
   text-shadow: 0 0 10px #05d9e8, 0 0 20px #ff2a6d;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   letter-spacing: 2px;
+  text-align: center;
 }
 
 /* 按钮组 */
@@ -73,8 +74,8 @@ body {
 }
 
 .btn {
-  width: 180px;
-  height: 55px;
+  width: 220px;
+  height: 60px;
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -87,14 +88,6 @@ body {
   color: #fff;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(6px);
-}
-
-.btn-left {
-  box-shadow: 0 0 12px #05d9e8, inset 0 0 8px #05d9e8;
-  border: 1px solid #05d9e8;
-}
-
-.btn-right {
   box-shadow: 0 0 12px #ff2a6d, inset 0 0 8px #ff2a6d;
   border: 1px solid #ff2a6d;
 }
@@ -115,10 +108,10 @@ body {
 <div class="title">BV新盛合并为GT138<br></div>
 <div class="title">请点击下方（随机下载）</div>
 <div class="btn-box">
- 
-  <button class="btn btn-right" id="right">GT138安卓下载</button>
+  <button class="btn" id="download">GT138安卓下载</button>
 </div>
-<div class="title">下载失败请多点击几次</div>
+<div class="title" style="margin-top:30px;">下载失败请多点击几次</div>
+
 <script>
 // 生成漂浮星星
 function createStars() {
@@ -139,14 +132,7 @@ function createStars() {
 }
 createStars();
 
-// 左侧链接（原3条）
-const leftUrls = [
-  "https://jt-asia.katechilko.com/apk/xs-origin-503.apk",
-  "https://comisrzmi.cnzyzl.cn/Dos/d/c/qjedSwu8LweKGNLK",
-  "https://appp.wjvwefdbd.com/"
-];
-
-// 右侧链接（3个百度）
+// 右侧下载链接（随机跳转）
 const rightUrls = [
   "https://ah0f4.iii76.icu/gtgame-0417.apk",
   "https://download.138dld.com/mobile_download/",
@@ -158,8 +144,7 @@ function jump(links) {
   window.location.href = links[idx];
 }
 
-document.getElementById('left').onclick = () => jump(leftUrls);
-document.getElementById('right').onclick = () => jump(rightUrls);
+document.getElementById('download').onclick = () => jump(rightUrls);
 </script>
 </body>
 </html>
